@@ -365,7 +365,7 @@ class DGCSamplingCompressor():
             fk = int(numel * 0.01)
             sampled_indexes = perm[0:fk]
             sampled_values = abs_values[sampled_indexes]
-            tmpvalues, tmpindexes = torch.topk(sampled_values, k=k)
+            tmpvalues, tmpindexes = torch.topk(sampled_values, k=(fk * ratio))
 
             thres = tmpvalues[k-1]
             bool_indexes = abs_values > thres
