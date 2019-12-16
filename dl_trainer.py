@@ -303,9 +303,8 @@ class DLTrainer:
         self._input_shape = (self.batch_size, 3, image_size, image_size)
         self._output_shape = (self.batch_size, 1000)
         hdf5fn = os.path.join(self.data_dir, 'imagenet-shuffled.hdf5')
-        #trainset = torchvision.datasets.ImageFolder(traindir, transforms.Compose([
+        trainset = torchvision.datasets.ImageFolder(traindir, transforms.Compose([
         #trainset = DatasetHDF5(hdf5fn, 'train', transforms.Compose([
-        trainset = torchvision.datasets.CIFAR(self.datadir, train=True, tranform=transforms.Compose([
             transforms.ToPILImage(),
             transforms.RandomResizedCrop(image_size),
             transforms.RandomHorizontalFlip(),
@@ -327,9 +326,9 @@ class DLTrainer:
             trainset,
             batch_size=self.batch_size, shuffle=shuffle,
             num_workers=NUM_CPU_THREADS, pin_memory=True, sampler=train_sampler)
-        #testset = torchvision.datasets.ImageFolder(testdir, transforms.Compose([
+
+        testset = torchvision.datasets.ImageFolder(testdir, transforms.Compose([
         #testset = DatasetHDF5(hdf5fn, 'val', transforms.Compose([
-        testset = torchvision.datasets.CIFAR(self.datadir, train=False, tranform=transforms.Compose([
                 transforms.ToPILImage(),
                 transforms.Scale(256),
                 transforms.CenterCrop(224),

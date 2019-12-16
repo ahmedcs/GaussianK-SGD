@@ -370,11 +370,11 @@ class DGCSamplingCompressor():
             thres = tmpvalues[k-1]
             bool_indexes = abs_values > thres
             indexes = bool_indexes.nonzero().data.squeeze().view(-1)
-            num_k = len(indexes)
-            if num_k > 4*k/3:
-                tmpvalues = abs_values[indexes] 
-                values, tmpindexes = torch.topk(tmpvalues, k=k)
-                indexes = indexes[tmpindexes]
+            #num_k = len(indexes)
+            #if num_k > 4*k/3:
+            #    tmpvalues = abs_values[indexes]
+            #    values, tmpindexes = torch.topk(tmpvalues, k=k)
+            #    indexes = indexes[tmpindexes]
 
             values = tensor.data[indexes] 
             DGCSamplingCompressor.residuals[name].data = tensor.data + 0.0 
