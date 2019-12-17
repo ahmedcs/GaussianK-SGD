@@ -354,6 +354,7 @@ class DGCSamplingCompressor():
             if name not in DGCSamplingCompressor.residuals:
                 DGCSamplingCompressor.residuals[name] = torch.zeros_like(tensor.data)
             numel = tensor.numel()
+            k = math.ceil(numel * ratio)
 
             tensor.add_(DGCSamplingCompressor.residuals[name].data)
 
@@ -361,13 +362,12 @@ class DGCSamplingCompressor():
 
             # First step sampling
             perm = torch.randperm(numel, device=tensor.device)
-            fk = max(1, int(numel * 0.01))
-            k = max(int(fk * ratio), 1)
+            fk = math.ceil(numel * 0.01)
             sampled_indexes = perm[0:fk]
             sampled_values = abs_values[sampled_indexes]
-            tmpvalues, tmpindexes = torch.topk(sampled_values, k=k)
+            tmpvalues, tmpindexes = torch.topk(sampled_values, k=math.ceil(fk * ratio))
 
-            thres = tmpvalues[k-1]
+            thres = tmpvalues[math.ceil(fk * ratio)-1]
             bool_indexes = abs_values > thres
             indexes = bool_indexes.nonzero().data.squeeze().view(-1)
             num_k = len(indexes)
