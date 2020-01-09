@@ -15,7 +15,7 @@ if WARMUP:
     PREFIX=PREFIX+'gwarmup'
 
 LOGGING_ASSUMPTION=False
-LOGGING_GRADIENTS=False
+LOGGING_GRADIENTS=True
 
 EXP='-convergence'
 PREFIX=PREFIX+EXP
@@ -27,7 +27,7 @@ if ADAPTIVE_MERGE:
 TENSORBOARD=False
 USE_FP16=False
 
-MAX_EPOCHS=10
+MAX_EPOCHS=30
 
 hostname=socket.gethostname() 
 logger=logging.getLogger(hostname)
