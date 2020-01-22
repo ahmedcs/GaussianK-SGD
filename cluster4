@@ -1,1 +1,2 @@
-localhost slots=4
+10.0.0.131 slots=2
+10.0.0.132 slots=2

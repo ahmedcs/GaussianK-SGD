@@ -1,7 +1,7 @@
 #!/bin/bash
 curdir=`pwd`
 #cd $curdir/ahmed/GaussianK-SGD/
-dnn="${dnn:-resnet20}"
+dnn="${dnn:-googlenet}"
 source $curdir/exp_configs/$dnn.conf
 nworkers="${nworkers:-4}"
 density="${density:-0.001}"
@@ -16,7 +16,7 @@ GRADSPATH=$curdir/logs
 #pip install --user -r $curdir/ahmed/GaussianK-SGD/requirements.txt
 
 mpirun --allow-run-as-root -wdir $curdir --mca orte_base_help_aggregate 0 -x NCCL_SOCKET_IFNAME=ens1f0\
-     --oversubscribe -np $nworkers -hostfile $curdir/cluster -bind-to none -map-by slot \
+     --oversubscribe -np $nworkers -hostfile $curdir/cluster2 -bind-to none -map-by slot \
     -x LD_LIBRARY_PATH -x PATH \
     -mca pml ob1 -mca btl ^openib \
     -x NCCL_DEBUG=INFO \
