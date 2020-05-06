@@ -403,9 +403,11 @@ class _DistributedOptimizer(torch.optim.Optimizer):
     def _allreduce_grad_async(self, p, name):
         tensor = p.data.view(-1)
         tensor_compressed, ctx = tensor, None #self._compression.compress(tensor, name)
-        if settings.LOGGING_GRADIENTS and rank() == 0:
+        if settings.LOGGING_GRADIENTS and rank() == 0 and self.train_iter in [0,10,100,200,300,500,700,900,2000,3000,4000,5000,6000,7000,8000,9000]:
             grads = tensor.cpu().numpy()
             np.save('%s/r%d_gradients_iter_%d' % (self._gradient_path, rank(), self.train_iter), grads)
+            if self.train_iter == 9000:
+               exit()
         handle = allreduce_async_(tensor_compressed, average=True, name=name)
         return handle, ctx
 

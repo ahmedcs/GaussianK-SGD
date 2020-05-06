@@ -223,9 +223,7 @@ class DLTrainer:
 
         self.optimizer = optim.SGD(parameters, 
                 lr=self.lr,
-                momentum=self.m, 
-                weight_decay=weight_decay,
-                nesterov=nesterov)
+                weight_decay=weight_decay)
 
         self.train_epoch = 0
 
